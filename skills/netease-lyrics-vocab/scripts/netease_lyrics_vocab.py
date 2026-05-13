@@ -51,6 +51,7 @@ class WordEntry:
     count: int = 0
     indexes: list[str] = field(default_factory=list)
     examples: list[str] = field(default_factory=list)
+    example_songs: list[str] = field(default_factory=list)
     example_keys: set[str] = field(default_factory=set)
     songs: set[str] = field(default_factory=set)
 
@@ -221,6 +222,7 @@ def collect_words(
                     entry.example_keys.add(example_key)
                     entry.indexes.append(f"{song.index}:{line_number}")
                     entry.examples.append(snippet)
+                    entry.example_songs.append(song.title)
         if sleep_seconds:
             time.sleep(sleep_seconds)
     return entries, failures
@@ -261,6 +263,7 @@ def rows_from_entries(
                 "definition_en": definition,
                 "source_indexes": "; ".join(entry.indexes),
                 "source_examples": " | ".join(entry.examples),
+                "source_songs": " | ".join(entry.example_songs),
                 "songs": "; ".join(sorted(entry.songs)),
             }
         )
@@ -268,7 +271,16 @@ def rows_from_entries(
 
 
 def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
-    fieldnames = ["word", "count", "meaning_zh", "definition_en", "source_indexes", "source_examples", "songs"]
+    fieldnames = [
+        "word",
+        "count",
+        "meaning_zh",
+        "definition_en",
+        "source_indexes",
+        "source_examples",
+        "source_songs",
+        "songs",
+    ]
     with path.open("w", newline="", encoding="utf-8-sig") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
@@ -282,7 +294,16 @@ def write_xlsx(path: Path, rows: list[dict[str, Any]]) -> None:
     except ImportError as exc:
         raise RuntimeError("openpyxl is required for xlsx output; use --format csv instead.") from exc
 
-    fieldnames = ["word", "count", "meaning_zh", "definition_en", "source_indexes", "source_examples", "songs"]
+    fieldnames = [
+        "word",
+        "count",
+        "meaning_zh",
+        "definition_en",
+        "source_indexes",
+        "source_examples",
+        "source_songs",
+        "songs",
+    ]
     wb = Workbook()
     ws = wb.active
     ws.title = "vocabulary"
@@ -291,7 +312,7 @@ def write_xlsx(path: Path, rows: list[dict[str, Any]]) -> None:
         cell.font = Font(bold=True)
     for row in rows:
         ws.append([row[name] for name in fieldnames])
-    widths = {"A": 18, "B": 10, "C": 24, "D": 48, "E": 28, "F": 72, "G": 48}
+    widths = {"A": 18, "B": 10, "C": 24, "D": 48, "E": 28, "F": 72, "G": 42, "H": 48}
     for col, width in widths.items():
         ws.column_dimensions[col].width = width
     ws.freeze_panes = "A2"

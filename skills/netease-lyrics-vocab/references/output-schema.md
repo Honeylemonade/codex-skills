@@ -10,13 +10,14 @@ Use this schema for vocabulary study tables generated from NetEase playlist lyri
 | `definition_en` | Optional short English definition fetched by the script. |
 | `source_indexes` | Semicolon-separated source locations in `songNumber:lineNumber` form. |
 | `source_examples` | Short lyric snippets showing representative uses. Do not store full lyrics. |
+| `source_songs` | Pipe-separated song titles aligned one-to-one with `source_examples`. |
 | `songs` | Semicolon-separated song titles where the word appears. |
 
 Source index rules:
 
 - `songNumber` is 1-based by playlist order after applying any `--max-songs` limit.
 - `lineNumber` is 1-based within the cleaned lyric lines for that song.
-- When a word appears many times, keep the first several indexes and examples. Counts remain complete.
+- When a word appears many times, keep the first several unique examples, aligned indexes, and aligned song titles. Counts remain complete.
 
 Recommended sorting:
 

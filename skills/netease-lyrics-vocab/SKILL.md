@@ -55,7 +55,7 @@ If the user asks for a shareable or portable result, return both the table and t
 
 See `references/output-schema.md` for column definitions. Preserve these columns unless the user requests a different layout:
 
-`word`, `count`, `meaning_zh`, `definition_en`, `source_indexes`, `source_examples`, `songs`.
+`word`, `count`, `meaning_zh`, `definition_en`, `source_indexes`, `source_examples`, `source_songs`, `songs`.
 
 ## Meaning Rules
 
@@ -68,5 +68,5 @@ See `references/output-schema.md` for column definitions. Preserve these columns
 
 - Confirm the playlist ID and output path.
 - Check that `count` is sorted descending.
-- Spot-check several `source_indexes` against `source_examples`.
+- Spot-check several `source_indexes`, `source_examples`, and `source_songs` rows for one-to-one alignment.
 - Report songs with missing lyrics or failed fetches.

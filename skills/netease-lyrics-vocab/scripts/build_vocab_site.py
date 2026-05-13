@@ -19,6 +19,7 @@ FIELDNAMES = [
     "definition_en",
     "source_indexes",
     "source_examples",
+    "source_songs",
     "songs",
 ]
 
@@ -53,6 +54,7 @@ def normalize_row(row: dict[str, Any]) -> dict[str, Any]:
         normalized["count"] = 0
     normalized["examples"] = [item.strip() for item in normalized["source_examples"].split(" | ") if item.strip()]
     normalized["song_list"] = [item.strip() for item in normalized["songs"].split("; ") if item.strip()]
+    normalized["source_song_list"] = [item.strip() for item in normalized["source_songs"].split(" | ") if item.strip()]
     normalized["source_index_list"] = [item.strip() for item in normalized["source_indexes"].split("; ") if item.strip()]
     return normalized
 
@@ -537,7 +539,7 @@ def build_html(rows: list[dict[str, Any]], *, title: str, source_name: str) -> s
           <div class="example-line">${{highlight(example, row.word)}}</div>
           <div class="tagline">
             <span class="tag">${{row.source_index_list && row.source_index_list[i] ? row.source_index_list[i] : '-'}}</span>
-            <span class="tag">${{row.song_list && row.song_list[i] ? row.song_list[i] : row.songs || 'source'}}</span>
+            <span class="tag">${{row.source_song_list && row.source_song_list[i] ? row.source_song_list[i] : row.songs || 'source'}}</span>
             <button class="icon speak-example" data-example="${{i}}" title="朗读例句" aria-label="朗读例句">▶</button>
           </div>
         </div>
