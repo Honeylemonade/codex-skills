@@ -1,0 +1,3 @@
+display_name: Example Skill
+short_description: Starter template for a personal Codex skill.
+default_prompt: Use the example skill template to create or refine a personal Codex skill.
