@@ -15,8 +15,13 @@ from typing import Any
 FIELDNAMES = [
     "word",
     "count",
+    "phonetic",
+    "part_of_speech",
     "meaning_zh",
+    "explanation_zh",
     "definition_en",
+    "root_affix",
+    "memory_note",
     "source_indexes",
     "source_examples",
     "source_songs",
@@ -281,6 +286,13 @@ def build_html(
       overflow-wrap: anywhere;
     }}
 
+    .phonetic {{
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.35;
+    }}
+
     .meaning {{
       margin-top: 12px;
       font-size: 20px;
@@ -293,6 +305,38 @@ def build_html(
       color: var(--muted);
       line-height: 1.45;
       max-width: 820px;
+    }}
+
+    .dictionary {{
+      padding: 0 22px 16px;
+      border-bottom: 1px solid var(--border);
+      display: grid;
+      gap: 10px;
+    }}
+
+    .dict-grid {{
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }}
+
+    .dict-item {{
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fbfcfd;
+      padding: 10px 12px;
+      min-width: 0;
+    }}
+
+    .dict-label {{
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 4px;
+    }}
+
+    .dict-value {{
+      line-height: 1.45;
+      overflow-wrap: anywhere;
     }}
 
     .actions {{
@@ -367,6 +411,7 @@ def build_html(
       aside {{ border-right: 0; border-bottom: 1px solid var(--border); max-height: 48vh; }}
       main {{ padding: 14px; height: auto; min-height: 52vh; overflow: visible; }}
       .study {{ height: auto; max-height: none; }}
+      .dict-grid {{ grid-template-columns: 1fr; }}
       .card-head {{ grid-template-columns: 1fr; }}
       .actions {{ justify-content: flex-start; }}
       .stats {{ grid-template-columns: repeat(3, minmax(0, 1fr)); }}
@@ -404,6 +449,7 @@ def build_html(
         <div class="card-head">
           <div>
             <div class="term" id="term"></div>
+            <div class="phonetic" id="phonetic"></div>
             <div class="meaning" id="meaning"></div>
             <div class="definition" id="definition"></div>
           </div>
@@ -413,6 +459,7 @@ def build_html(
             <button id="hideMeaning" title="显示或隐藏含义">隐藏含义</button>
           </div>
         </div>
+        <div class="dictionary" id="dictionary"></div>
         <div class="nav">
           <div class="tagline" id="facts"></div>
           <div class="actions">
@@ -547,8 +594,10 @@ def build_html(
     function renderCard() {{
       if (!filtered.length) {{
         $('term').textContent = '';
+        $('phonetic').textContent = '';
         $('meaning').textContent = '';
         $('definition').textContent = '';
+        $('dictionary').innerHTML = '';
         $('facts').innerHTML = '';
         $('examples').innerHTML = '<div class="empty">调整筛选条件</div>';
         return;
@@ -556,8 +605,26 @@ def build_html(
       const row = filtered[selected];
       $('term').textContent = row.word;
       const meaning = row.meaning_zh || '待补充中文释义';
+      const phoneticParts = [row.phonetic, row.part_of_speech].filter(Boolean);
+      $('phonetic').textContent = meaningsVisible ? phoneticParts.join('  ·  ') : '';
       $('meaning').textContent = meaningsVisible ? meaning : '••••••';
       $('definition').textContent = meaningsVisible ? row.definition_en || '' : '';
+      const dictionaryItems = [
+        ['中文解释', row.explanation_zh || row.meaning_zh || '待补充'],
+        ['英文解释', row.definition_en || '待补充'],
+        ['词根/词缀', row.root_affix || '待补充'],
+        ['记忆提示', row.memory_note || '待补充']
+      ];
+      $('dictionary').innerHTML = meaningsVisible ? `
+        <div class="dict-grid">
+          ${{dictionaryItems.map(([label, value]) => `
+            <div class="dict-item">
+              <div class="dict-label">${{label}}</div>
+              <div class="dict-value">${{value}}</div>
+            </div>
+          `).join('')}}
+        </div>
+      ` : '';
       $('toggleKnown').classList.toggle('active', known.has(row.word));
       $('toggleKnown').textContent = known.has(row.word) ? '✓ 已会' : '✓ 标记';
       $('hideMeaning').textContent = meaningsVisible ? '隐藏含义' : '显示含义';

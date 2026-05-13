@@ -11,9 +11,10 @@ Use this skill to turn a NetEase Cloud Music playlist into a vocabulary study ta
 
 1. Identify the playlist ID from the user's URL or numeric ID.
 2. Run `scripts/netease_lyrics_vocab.py` to fetch playlist tracks, fetch lyrics, tokenize English words, count frequency, and export the table.
-3. Inspect the generated table and fill or improve `meaning_zh` for important words. Prefer concise Chinese meanings in the lyric context.
-4. When the user wants a learning interface, run `scripts/build_vocab_site.py` against the CSV/XLSX table to generate a static HTML study site.
-5. Return the output file path and summarize coverage: songs processed, lyrics found, unique words, generated table, generated site, and any failures.
+3. Run `scripts/enrich_dictionary.py` to add built-in dictionary columns: phonetic, part of speech, Chinese meaning, Chinese explanation, English definition, root/affix, and memory note.
+4. Inspect the generated table and fill or improve `meaning_zh` and `explanation_zh` for important words. Prefer concise Chinese meanings in the lyric context.
+5. When the user wants a learning interface, run `scripts/build_vocab_site.py` against the enriched CSV/XLSX table to generate a static HTML study site.
+6. Return the output file path and summarize coverage: songs processed, lyrics found, unique words, generated table, generated site, and any failures.
 
 ## Script
 
@@ -33,6 +34,18 @@ Useful options:
 
 The script uses public NetEase web endpoints. These endpoints are unofficial and can change or rate-limit. If live fetching fails, ask the user for exported lyric files or a song list, then adapt the script input rather than inventing data.
 
+## Dictionary Enrichment
+
+Add built-in dictionary fields to the table before building the site:
+
+```bash
+python3 scripts/enrich_dictionary.py vocab.xlsx --output vocab.enriched.xlsx
+```
+
+The enrichment script reads and writes CSV/XLSX. It uses a small built-in Chinese meaning map for common words, local root/affix rules, and public English dictionary lookup for phonetics, part of speech, and English definitions. Use `--offline` to skip public dictionary lookup.
+
+For high-quality Chinese explanations and deeper etymology, use the enriched table as the base and let Codex or another model fill `meaning_zh`, `explanation_zh`, `root_affix`, and `memory_note`; the study page embeds the completed values and works offline.
+
 ## Study Website
 
 Generate a static learning page from a finished table:
@@ -41,11 +54,11 @@ Generate a static learning page from a finished table:
 python3 scripts/build_vocab_site.py vocab.xlsx --output vocab-study-site/index.html --title "歌词单词学习"
 ```
 
-The generated page embeds the vocabulary data and works as a local file. It provides:
+The generated page embeds the vocabulary and dictionary data and works as a local file. It provides:
 
 - Search by word, meaning, definition, or song.
 - Frequency filtering and known-word marking stored in browser local storage.
-- Word cards with meaning, English definition, source indexes, source examples, and songs.
+- Word cards with meaning, phonetic, part of speech, Chinese explanation, English definition, root/affix, memory note, source indexes, source examples, and songs.
 - Browser speech synthesis buttons for the word and each example sentence. The page prefers English system voices and uses slower rates for clearer study playback.
 - Deduplicated examples per word, so repeated lyric lines do not crowd the card while frequency counts remain complete.
 
@@ -71,7 +84,7 @@ If the user asks for a shareable or portable result, return both the table and t
 
 See `references/output-schema.md` for column definitions. Preserve these columns unless the user requests a different layout:
 
-`word`, `count`, `meaning_zh`, `definition_en`, `source_indexes`, `source_examples`, `source_songs`, `songs`.
+`word`, `count`, `phonetic`, `part_of_speech`, `meaning_zh`, `explanation_zh`, `definition_en`, `root_affix`, `memory_note`, `source_indexes`, `source_examples`, `source_songs`, `songs`.
 
 ## Meaning Rules
 
