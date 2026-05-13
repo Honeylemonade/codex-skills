@@ -40,6 +40,7 @@ COMMON_ZH = {
     "dead": "死的；失效的；完全地",
     "love": "爱；喜爱；爱情",
     "again": "再次；又一次",
+    "enchanter": "施魔法的人；令人着迷的人",
     "friend": "朋友",
     "goodbye": "再见；告别",
     "godspeed": "祝一路顺风；祝成功",
@@ -56,6 +57,9 @@ COMMON_ZH = {
     "need": "需要；必要",
     "too": "也；太",
 }
+
+GENERIC_ROOT_AFFIX = "基础词或常用词，优先结合歌词例句记忆。"
+GENERIC_MEMORY_NOTE = "结合出现频率最高的歌词例句记忆。"
 
 BUILTIN_ENTRIES = {
     "retreat": {
@@ -102,6 +106,15 @@ BUILTIN_ENTRIES = {
         "explanation_zh": "歌词中 I’m a dead man 可理解为“我完了/像死人一样”。",
         "root_affix": "基础形容词，无明显现代英语词缀。",
         "memory_note": "dead man 在歌词里通常不是字面死亡，也可能是夸张的情绪表达。",
+    },
+    "enchanter": {
+        "phonetic": "/ɪnˈtʃɑːntər/",
+        "part_of_speech": "noun",
+        "definition_en": "A person who enchants, charms, or delights others.",
+        "meaning_zh": "施魔法的人；令人着迷的人",
+        "explanation_zh": "歌词中像是在呼唤一个带有魔法感或强烈吸引力的人。",
+        "root_affix": "enchant = 使着迷、施魔法；-er = 做某事的人，所以 enchanter 可理解为“施魔法/使人着迷的人”。",
+        "memory_note": "看到 Enchanter, come to me 可以按“有魔力的人，来到我身边”来记。",
     },
 }
 
@@ -203,7 +216,7 @@ def root_affix_note(word: str) -> str:
     for pattern, note in ROOT_RULES:
         if pattern.match(word):
             return note
-    return "基础词或常用词，优先结合歌词例句记忆。"
+    return GENERIC_ROOT_AFFIX
 
 
 def memory_note(word: str, definition: str) -> str:
@@ -211,7 +224,7 @@ def memory_note(word: str, definition: str) -> str:
         return f"看到 re- 先联想“再次/返回”，再结合例句判断 {word} 的具体动作。"
     if definition:
         return f"把英文释义关键词和歌词例句一起记：{definition[:80]}"
-    return "结合出现频率最高的歌词例句记忆。"
+    return GENERIC_MEMORY_NOTE
 
 
 def enrich_row(row: dict[str, Any], *, fetch_online: bool, cache: dict[str, Any], timeout: float) -> dict[str, Any]:
@@ -236,9 +249,9 @@ def enrich_row(row: dict[str, Any], *, fetch_online: bool, cache: dict[str, Any]
             enriched["explanation_zh"] = f"歌词语境中可理解为：{enriched['meaning_zh']}。"
         else:
             enriched["explanation_zh"] = ""
-    if not enriched.get("root_affix"):
+    if not enriched.get("root_affix") or (info.get("root_affix") and enriched.get("root_affix") == GENERIC_ROOT_AFFIX):
         enriched["root_affix"] = info.get("root_affix") or root_affix_note(word)
-    if not enriched.get("memory_note"):
+    if not enriched.get("memory_note") or (info.get("memory_note") and enriched.get("memory_note") == GENERIC_MEMORY_NOTE):
         enriched["memory_note"] = info.get("memory_note") or memory_note(word, str(enriched.get("definition_en", "")))
     return enriched
 
