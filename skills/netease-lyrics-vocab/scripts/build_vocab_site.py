@@ -267,11 +267,11 @@ def build_html(
       height: calc(100vh - 48px);
       overflow: hidden;
       display: grid;
-      grid-template-rows: auto auto minmax(0, 1fr);
+      grid-template-rows: auto auto auto minmax(0, 1fr);
     }}
 
     .card-head {{
-      padding: 22px;
+      padding: 18px;
       border-bottom: 1px solid var(--border);
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
@@ -280,51 +280,52 @@ def build_html(
     }}
 
     .term {{
-      font-size: clamp(34px, 6vw, 72px);
+      font-size: clamp(34px, 5vw, 64px);
       line-height: 1;
       font-weight: 800;
       overflow-wrap: anywhere;
     }}
 
     .phonetic {{
-      margin-top: 8px;
+      margin-top: 6px;
       color: var(--muted);
-      font-size: 18px;
+      font-size: 16px;
       line-height: 1.35;
     }}
 
     .meaning {{
-      margin-top: 12px;
-      font-size: 20px;
+      margin-top: 8px;
+      font-size: 18px;
       line-height: 1.35;
-      min-height: 28px;
     }}
 
     .definition {{
-      margin-top: 8px;
+      margin-top: 6px;
       color: var(--muted);
       line-height: 1.45;
       max-width: 820px;
     }}
 
     .dictionary {{
-      padding: 0 22px 16px;
+      padding: 12px 18px;
       border-bottom: 1px solid var(--border);
       display: grid;
-      gap: 10px;
+      gap: 8px;
+      max-height: min(26vh, 210px);
+      overflow: auto;
     }}
 
     .dict-grid {{
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
+      gap: 8px;
     }}
 
     .dict-item {{
       border: 1px solid var(--border);
       border-radius: 8px;
       background: #fbfcfd;
-      padding: 10px 12px;
+      padding: 8px 10px;
       min-width: 0;
     }}
 
@@ -337,6 +338,7 @@ def build_html(
     .dict-value {{
       line-height: 1.45;
       overflow-wrap: anywhere;
+      word-break: break-word;
     }}
 
     .actions {{
@@ -347,7 +349,7 @@ def build_html(
     }}
 
     .nav {{
-      padding: 12px 22px;
+      padding: 10px 18px;
       border-bottom: 1px solid var(--border);
       display: flex;
       gap: 8px;
@@ -358,7 +360,7 @@ def build_html(
 
     .examples {{
       overflow: auto;
-      padding: 18px 22px 22px;
+      padding: 14px 18px 18px;
       display: grid;
       gap: 12px;
       align-content: start;
@@ -411,6 +413,7 @@ def build_html(
       aside {{ border-right: 0; border-bottom: 1px solid var(--border); max-height: 48vh; }}
       main {{ padding: 14px; height: auto; min-height: 52vh; overflow: visible; }}
       .study {{ height: auto; max-height: none; }}
+      .dictionary {{ max-height: none; }}
       .dict-grid {{ grid-template-columns: 1fr; }}
       .card-head {{ grid-template-columns: 1fr; }}
       .actions {{ justify-content: flex-start; }}
