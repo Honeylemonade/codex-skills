@@ -49,6 +49,22 @@ The generated page embeds the vocabulary data and works as a local file. It prov
 - Browser speech synthesis buttons for the word and each example sentence. The page prefers English system voices and uses slower rates for clearer study playback.
 - Deduplicated examples per word, so repeated lyric lines do not crowd the card while frequency counts remain complete.
 
+For more natural voices, generate cached model-based MP3 files before building the page:
+
+```bash
+OPENAI_API_KEY=... python3 scripts/generate_tts_audio.py vocab.xlsx \
+  --site-dir vocab-study-site \
+  --voice cedar \
+  --include-examples \
+  --max-examples 3
+
+python3 scripts/build_vocab_site.py vocab.xlsx \
+  --output vocab-study-site/index.html \
+  --audio-manifest vocab-study-site/audio_manifest.json
+```
+
+The page plays generated MP3 files first and falls back to browser speech synthesis if audio is missing. Show the AI-generated audio disclosure when sharing the page with others.
+
 If the user asks for a shareable or portable result, return both the table and the generated `index.html`. Do not commit generated study pages unless the user explicitly wants examples stored in the repository.
 
 ## Output Columns
