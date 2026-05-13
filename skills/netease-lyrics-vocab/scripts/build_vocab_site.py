@@ -102,9 +102,14 @@ def build_html(rows: list[dict[str, Any]], *, title: str, source_name: str) -> s
 
     * {{ box-sizing: border-box; }}
 
+    html, body {{
+      height: 100%;
+    }}
+
     body {{
       margin: 0;
-      min-height: 100vh;
+      min-height: 100%;
+      overflow: hidden;
       background: var(--bg);
       color: var(--text);
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -133,7 +138,9 @@ def build_html(rows: list[dict[str, Any]], *, title: str, source_name: str) -> s
     .app {{
       display: grid;
       grid-template-columns: minmax(280px, 380px) minmax(0, 1fr);
-      min-height: 100vh;
+      height: 100vh;
+      min-height: 0;
+      overflow: hidden;
     }}
 
     aside {{
@@ -144,6 +151,8 @@ def build_html(rows: list[dict[str, Any]], *, title: str, source_name: str) -> s
       flex-direction: column;
       gap: 14px;
       min-width: 0;
+      min-height: 0;
+      overflow: hidden;
     }}
 
     main {{
@@ -152,6 +161,8 @@ def build_html(rows: list[dict[str, Any]], *, title: str, source_name: str) -> s
       display: grid;
       grid-template-rows: auto minmax(0, 1fr);
       gap: 18px;
+      height: 100vh;
+      overflow: hidden;
     }}
 
     h1 {{
@@ -213,6 +224,7 @@ def build_html(rows: list[dict[str, Any]], *, title: str, source_name: str) -> s
       border: 1px solid var(--border);
       border-radius: 8px;
       min-height: 240px;
+      flex: 1 1 auto;
     }}
 
     .word-row {{
@@ -240,6 +252,8 @@ def build_html(rows: list[dict[str, Any]], *, title: str, source_name: str) -> s
       border-radius: 8px;
       box-shadow: var(--shadow);
       min-height: 0;
+      height: calc(100vh - 48px);
+      overflow: hidden;
       display: grid;
       grid-template-rows: auto auto minmax(0, 1fr);
     }}
@@ -341,9 +355,11 @@ def build_html(rows: list[dict[str, Any]], *, title: str, source_name: str) -> s
     }}
 
     @media (max-width: 860px) {{
-      .app {{ grid-template-columns: 1fr; }}
+      body {{ overflow: auto; }}
+      .app {{ grid-template-columns: 1fr; height: auto; min-height: 100vh; overflow: visible; }}
       aside {{ border-right: 0; border-bottom: 1px solid var(--border); max-height: 48vh; }}
-      main {{ padding: 14px; }}
+      main {{ padding: 14px; height: auto; min-height: 52vh; overflow: visible; }}
+      .study {{ height: auto; max-height: none; }}
       .card-head {{ grid-template-columns: 1fr; }}
       .actions {{ justify-content: flex-start; }}
       .stats {{ grid-template-columns: repeat(3, minmax(0, 1fr)); }}
