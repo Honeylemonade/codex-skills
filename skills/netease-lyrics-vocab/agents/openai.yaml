@@ -1,0 +1,4 @@
+interface:
+  display_name: "NetEase Lyrics Vocab"
+  short_description: "Build vocabulary study tables from NetEase playlist lyrics."
+  default_prompt: "Analyze a NetEase Cloud Music playlist, extract lyric vocabulary, and create a frequency table with source indexes and meanings."

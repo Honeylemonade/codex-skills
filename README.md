@@ -25,6 +25,11 @@ Each skill is a self-contained directory. `SKILL.md` is required; bundled resour
 3. Keep the main instructions concise. Put detailed docs in `references/`, deterministic helpers in `scripts/`, and reusable files in `assets/`.
 4. Update `agents/openai.yaml` so the skill list has useful display text.
 
+## Skills
+
+- `netease-lyrics-vocab`: Build vocabulary study tables from NetEase Cloud Music playlist lyrics.
+- `example-skill`: Minimal starter template for future skills.
+
 ## Install Locally
 
 From another machine or Codex environment:
