@@ -32,6 +32,16 @@ BASE_FIELDS = [
     "songs",
 ]
 
+DICTIONARY_FIELDS = [
+    "phonetic",
+    "part_of_speech",
+    "meaning_zh",
+    "explanation_zh",
+    "definition_en",
+    "root_affix",
+    "memory_note",
+]
+
 COMMON_ZH = {
     "come": "来；到来；出现",
     "know": "知道；了解；认识",
@@ -256,17 +266,34 @@ def enrich_row(row: dict[str, Any], *, fetch_online: bool, cache: dict[str, Any]
     return enriched
 
 
+def merge_previous_dictionary(rows: list[dict[str, Any]], previous_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    previous_by_word = {str(row.get("word", "")).strip().lower(): row for row in previous_rows}
+    merged: list[dict[str, Any]] = []
+    for row in rows:
+        word = str(row.get("word", "")).strip().lower()
+        previous = previous_by_word.get(word, {})
+        item = dict(row)
+        for field in DICTIONARY_FIELDS:
+            if not item.get(field) and previous.get(field):
+                item[field] = previous[field]
+        merged.append(item)
+    return merged
+
+
 def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("input", help="Input CSV/XLSX vocabulary table")
     parser.add_argument("--output", required=True, help="Output CSV/XLSX path")
     parser.add_argument("--offline", action="store_true", help="Skip public dictionary lookup")
     parser.add_argument("--cache", help="Dictionary lookup cache JSON path")
+    parser.add_argument("--previous", help="Previous enriched CSV/XLSX table to reuse dictionary fields from")
     parser.add_argument("--timeout", type=float, default=4.0, help="Dictionary request timeout in seconds")
     parser.add_argument("--sleep", type=float, default=0.05, help="Delay between dictionary requests")
     args = parser.parse_args(argv)
 
     rows = read_rows(Path(args.input))
+    if args.previous:
+        rows = merge_previous_dictionary(rows, read_rows(Path(args.previous)))
     cache_path = Path(args.cache) if args.cache else Path(args.output).with_suffix(".dictionary-cache.json")
     if cache_path.exists():
         cache = json.loads(cache_path.read_text(encoding="utf-8"))

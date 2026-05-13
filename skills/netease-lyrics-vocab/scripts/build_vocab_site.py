@@ -480,8 +480,26 @@ def build_html(
     const payload = JSON.parse(document.getElementById('payload').textContent);
     const rows = payload.rows.map((row, index) => ({{ ...row, index }}));
     const audio = payload.audio || {{}};
-    const knownKey = `vocab-known:${{payload.sourceName}}:${{rows.length}}`;
-    const known = new Set(JSON.parse(localStorage.getItem(knownKey) || '[]'));
+    const knownKey = `vocab-known:${{payload.sourceName}}`;
+    const legacyKnownPrefix = `vocab-known:${{payload.sourceName}}:`;
+    function readKnownWords(key) {{
+      try {{
+        const value = JSON.parse(localStorage.getItem(key) || '[]');
+        return Array.isArray(value) ? value : [];
+      }} catch {{
+        return [];
+      }}
+    }}
+    const known = new Set(readKnownWords(knownKey));
+    for (let i = 0; i < localStorage.length; i += 1) {{
+      const key = localStorage.key(i);
+      if (key && key.startsWith(legacyKnownPrefix)) {{
+        readKnownWords(key).forEach((word) => known.add(word));
+      }}
+    }}
+    if (known.size) {{
+      localStorage.setItem(knownKey, JSON.stringify([...known]));
+    }}
     let filtered = [];
     let selected = 0;
     let meaningsVisible = true;
@@ -567,7 +585,7 @@ def build_html(
     function renderStats() {{
       $('totalWords').textContent = rows.length;
       $('visibleWords').textContent = filtered.length;
-      $('knownWords').textContent = known.size;
+      $('knownWords').textContent = rows.filter((row) => known.has(row.word)).length;
     }}
 
     function renderList() {{

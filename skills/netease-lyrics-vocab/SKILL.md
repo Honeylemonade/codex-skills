@@ -42,6 +42,12 @@ Add built-in dictionary fields to the table before building the site:
 python3 scripts/enrich_dictionary.py vocab.xlsx --output vocab.enriched.xlsx
 ```
 
+When regenerating a playlist table, preserve previously filled dictionary fields with:
+
+```bash
+python3 scripts/enrich_dictionary.py vocab.xlsx --previous old-vocab.enriched.xlsx --output vocab.enriched.xlsx
+```
+
 The enrichment script reads and writes CSV/XLSX. It uses a small built-in Chinese meaning map for common words, local root/affix rules, and public English dictionary lookup for phonetics, part of speech, and English definitions. Use `--offline` to skip public dictionary lookup.
 
 For high-quality Chinese explanations and deeper etymology, use the enriched table as the base and let Codex or another model fill `meaning_zh`, `explanation_zh`, `root_affix`, and `memory_note`; the study page embeds the completed values and works offline.
