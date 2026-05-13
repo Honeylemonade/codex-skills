@@ -46,7 +46,8 @@ The generated page embeds the vocabulary data and works as a local file. It prov
 - Search by word, meaning, definition, or song.
 - Frequency filtering and known-word marking stored in browser local storage.
 - Word cards with meaning, English definition, source indexes, source examples, and songs.
-- Browser speech synthesis buttons for the word and each example sentence.
+- Browser speech synthesis buttons for the word and each example sentence. The page prefers English system voices and uses slower rates for clearer study playback.
+- Deduplicated examples per word, so repeated lyric lines do not crowd the card while frequency counts remain complete.
 
 If the user asks for a shareable or portable result, return both the table and the generated `index.html`. Do not commit generated study pages unless the user explicitly wants examples stored in the repository.
 

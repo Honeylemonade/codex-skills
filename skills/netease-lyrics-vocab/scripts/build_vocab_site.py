@@ -409,6 +409,8 @@ def build_html(rows: list[dict[str, Any]], *, title: str, source_name: str) -> s
     let filtered = [];
     let selected = 0;
     let meaningsVisible = true;
+    let voices = [];
+    let preferredVoice = null;
 
     const $ = (id) => document.getElementById(id);
     const collator = new Intl.Collator('en');
@@ -417,12 +419,37 @@ def build_html(rows: list[dict[str, Any]], *, title: str, source_name: str) -> s
       localStorage.setItem(knownKey, JSON.stringify([...known]));
     }}
 
-    function speak(text) {{
+    function chooseVoice() {{
+      if (!window.speechSynthesis) return null;
+      voices = window.speechSynthesis.getVoices();
+      const englishVoices = voices.filter((voice) => /^en[-_]/i.test(voice.lang || ''));
+      const preferredNames = [
+        'Samantha', 'Ava', 'Allison', 'Victoria', 'Karen',
+        'Google US English', 'Google UK English Female',
+        'Microsoft Aria', 'Microsoft Jenny', 'Daniel'
+      ];
+      preferredVoice =
+        preferredNames.map((name) => englishVoices.find((voice) => voice.name.includes(name))).find(Boolean) ||
+        englishVoices.find((voice) => /natural|premium|enhanced/i.test(voice.name)) ||
+        englishVoices.find((voice) => /en[-_]US/i.test(voice.lang)) ||
+        englishVoices[0] ||
+        null;
+      return preferredVoice;
+    }}
+
+    function speak(text, kind = 'sentence') {{
       if (!text || !window.speechSynthesis) return;
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'en-US';
-      utterance.rate = 0.86;
+      const voice = preferredVoice || chooseVoice();
+      if (voice) {{
+        utterance.voice = voice;
+        utterance.lang = voice.lang || 'en-US';
+      }} else {{
+        utterance.lang = 'en-US';
+      }}
+      utterance.rate = kind === 'word' ? 0.72 : 0.82;
+      utterance.pitch = 1.0;
       window.speechSynthesis.speak(utterance);
     }}
 
@@ -516,7 +543,7 @@ def build_html(rows: list[dict[str, Any]], *, title: str, source_name: str) -> s
         </div>
       `).join('');
       document.querySelectorAll('.speak-example').forEach((button) => {{
-        button.addEventListener('click', () => speak(examples[Number(button.dataset.example)]));
+        button.addEventListener('click', () => speak(examples[Number(button.dataset.example)], 'sentence'));
       }});
     }}
 
@@ -532,7 +559,7 @@ def build_html(rows: list[dict[str, Any]], *, title: str, source_name: str) -> s
     $('search').addEventListener('input', applyFilters);
     $('mode').addEventListener('change', applyFilters);
     $('minCount').addEventListener('input', applyFilters);
-    $('speakWord').addEventListener('click', () => filtered[selected] && speak(filtered[selected].word));
+    $('speakWord').addEventListener('click', () => filtered[selected] && speak(filtered[selected].word, 'word'));
     $('prevWord').addEventListener('click', () => move(-1));
     $('nextWord').addEventListener('click', () => move(1));
     $('toggleKnown').addEventListener('click', () => {{
@@ -547,13 +574,17 @@ def build_html(rows: list[dict[str, Any]], *, title: str, source_name: str) -> s
       meaningsVisible = !meaningsVisible;
       renderCard();
     }});
+    if (window.speechSynthesis) {{
+      chooseVoice();
+      window.speechSynthesis.onvoiceschanged = chooseVoice;
+    }}
     document.addEventListener('keydown', (event) => {{
       if (event.target.matches('input, select')) return;
       if (event.key === 'ArrowRight') move(1);
       if (event.key === 'ArrowLeft') move(-1);
       if (event.key === ' ') {{
         event.preventDefault();
-        filtered[selected] && speak(filtered[selected].word);
+        filtered[selected] && speak(filtered[selected].word, 'word');
       }}
     }});
     applyFilters();

@@ -51,6 +51,7 @@ class WordEntry:
     count: int = 0
     indexes: list[str] = field(default_factory=list)
     examples: list[str] = field(default_factory=list)
+    example_keys: set[str] = field(default_factory=set)
     songs: set[str] = field(default_factory=set)
 
 
@@ -83,8 +84,17 @@ def parse_playlist_id(value: str) -> str:
 
 
 def fetch_playlist(playlist_id: str) -> tuple[str, list[Song]]:
-    url = f"https://music.163.com/api/playlist/detail?id={playlist_id}"
-    data = http_json(url)
+    urls = [
+        f"https://music.163.com/api/playlist/detail?id={playlist_id}",
+        f"https://music.163.com/api/v6/playlist/detail?id={playlist_id}",
+    ]
+    data = {}
+    playlist: dict[str, Any] = {}
+    for url in urls:
+        data = http_json(url)
+        playlist = data.get("result") or data.get("playlist") or {}
+        if playlist.get("tracks") or playlist.get("trackIds"):
+            break
     playlist = data.get("result") or data.get("playlist") or {}
     name = playlist.get("name") or f"playlist-{playlist_id}"
     tracks = playlist.get("tracks") or []
@@ -167,6 +177,12 @@ def snippet_for(line: str, word: str, max_len: int = 90) -> str:
     return prefix + compact[start:end] + suffix
 
 
+def normalize_example_key(text: str) -> str:
+    text = text.translate(APOSTROPHE_TRANSLATION).lower()
+    text = re.sub(r"[^a-z0-9]+", " ", text)
+    return " ".join(text.split())
+
+
 def collect_words(
     songs: list[Song],
     *,
@@ -199,10 +215,12 @@ def collect_words(
                 entry = entries[word]
                 entry.count += amount
                 entry.songs.add(song.title)
-                if len(entry.indexes) < max_examples:
+                snippet = snippet_for(line, word)
+                example_key = normalize_example_key(snippet)
+                if example_key not in entry.example_keys and len(entry.examples) < max_examples:
+                    entry.example_keys.add(example_key)
                     entry.indexes.append(f"{song.index}:{line_number}")
-                if len(entry.examples) < max_examples:
-                    entry.examples.append(snippet_for(line, word))
+                    entry.examples.append(snippet)
         if sleep_seconds:
             time.sleep(sleep_seconds)
     return entries, failures
