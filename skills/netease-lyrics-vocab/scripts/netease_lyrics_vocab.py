@@ -22,10 +22,11 @@ PLAYLIST_ID_RE = re.compile(r"(?:playlist\?id=|[?&]id=|^)(\d{4,})")
 LRC_TIME_RE = re.compile(r"\[[0-9]{1,2}:[0-9]{2}(?:\.[0-9]{1,3})?\]")
 WORD_RE = re.compile(r"[A-Za-z]+(?:['-][A-Za-z]+)?")
 CREDIT_KEYWORDS = (
-    "作词", "作曲", "编曲", "制作人", "监制", "出品", "发行", "企划",
+    "作词", "作曲", "词曲", "编曲", "制作人", "监制", "出品", "发行", "企划",
     "录音", "混音", "母带", "和声", "和音", "吉他", "贝斯", "鼓",
     "弦乐", "人声", "音频", "工程师", "工作室", "studio",
 )
+APOSTROPHE_TRANSLATION = str.maketrans({"’": "'", "‘": "'", "＇": "'"})
 
 DEFAULT_STOPWORDS = {
     "a", "an", "and", "are", "as", "at", "be", "been", "but", "by", "can",
@@ -188,7 +189,8 @@ def collect_words(
             continue
         for line_number, line in enumerate(clean_lyric_lines(lyric), start=1):
             seen_in_line: Counter[str] = Counter()
-            for token in WORD_RE.findall(line):
+            token_line = line.translate(APOSTROPHE_TRANSLATION)
+            for token in WORD_RE.findall(token_line):
                 word = normalize_word(token)
                 if not word or word in stopwords or len(word) < 2:
                     continue

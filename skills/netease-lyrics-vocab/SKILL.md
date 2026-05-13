@@ -1,6 +1,6 @@
 ---
 name: netease-lyrics-vocab
-description: Build vocabulary study tables from NetEase Cloud Music playlist lyrics. Use when the user provides a NetEase playlist URL or playlist ID and wants to fetch songs, collect lyrics, extract English words, count frequency, record source indexes by song and lyric line, add word meanings, and export a CSV or XLSX table for vocabulary learning.
+description: Build vocabulary study tables and study websites from NetEase Cloud Music playlist lyrics. Use when the user provides a NetEase playlist URL or playlist ID and wants to fetch songs, collect lyrics, extract English words, count frequency, record source indexes by song and lyric line, add word meanings, export a CSV/XLSX table, or generate an interactive local vocabulary study page with word and example sentence pronunciation.
 ---
 
 # NetEase Lyrics Vocab
@@ -12,7 +12,8 @@ Use this skill to turn a NetEase Cloud Music playlist into a vocabulary study ta
 1. Identify the playlist ID from the user's URL or numeric ID.
 2. Run `scripts/netease_lyrics_vocab.py` to fetch playlist tracks, fetch lyrics, tokenize English words, count frequency, and export the table.
 3. Inspect the generated table and fill or improve `meaning_zh` for important words. Prefer concise Chinese meanings in the lyric context.
-4. Return the output file path and summarize coverage: songs processed, lyrics found, unique words, and any failures.
+4. When the user wants a learning interface, run `scripts/build_vocab_site.py` against the CSV/XLSX table to generate a static HTML study site.
+5. Return the output file path and summarize coverage: songs processed, lyrics found, unique words, generated table, generated site, and any failures.
 
 ## Script
 
@@ -31,6 +32,23 @@ Useful options:
 - `--define english`: Try to add short English definitions from dictionaryapi.dev. Keep `meaning_zh` for Codex or the user to fill.
 
 The script uses public NetEase web endpoints. These endpoints are unofficial and can change or rate-limit. If live fetching fails, ask the user for exported lyric files or a song list, then adapt the script input rather than inventing data.
+
+## Study Website
+
+Generate a static learning page from a finished table:
+
+```bash
+python3 scripts/build_vocab_site.py vocab.xlsx --output vocab-study-site/index.html --title "歌词单词学习"
+```
+
+The generated page embeds the vocabulary data and works as a local file. It provides:
+
+- Search by word, meaning, definition, or song.
+- Frequency filtering and known-word marking stored in browser local storage.
+- Word cards with meaning, English definition, source indexes, source examples, and songs.
+- Browser speech synthesis buttons for the word and each example sentence.
+
+If the user asks for a shareable or portable result, return both the table and the generated `index.html`. Do not commit generated study pages unless the user explicitly wants examples stored in the repository.
 
 ## Output Columns
 
