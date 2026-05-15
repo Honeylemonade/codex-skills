@@ -40,6 +40,12 @@ def walk_import_fields(value: Any, block_index: int, path: str, issues: list[str
             f"allowed types are {sorted(ALLOWED_TYPES)}"
         )
 
+    if isinstance(field_name, str) and field_name.startswith("http_query_params:"):
+        issues.append(
+            f"JSON block {block_index}: {field_path} should keep fieldName as the raw parameter name; "
+            "put the http_query_params hint in description"
+        )
+
     if field_type == "object" and not value.get("children"):
         issues.append(f"JSON block {block_index}: object field {field_path} must have non-empty children")
 

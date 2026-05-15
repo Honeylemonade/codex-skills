@@ -17,22 +17,22 @@ Purpose: Create a DataCenter datasource after duplicate-check has confirmed that
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `http_query_params: caller_name` | `string` | Yes | Name of the registered OpenAPI caller. The server uses it to identify the calling system and validate access. |
-| `http_query_params: caller_token` | `string` | Yes | Authentication token generated from the caller identity and secret key. The server validates this before executing the request. |
+| `caller_name` | `string` | Yes | http_query_params: caller_name |
+| `caller_token` | `string` | Yes | http_query_params: caller_token |
 
 Import JSON:
 
 ```json
 [
   {
-    "fieldName": "http_query_params: caller_name",
+    "fieldName": "caller_name",
     "type": "string",
-    "description": "Name of the registered OpenAPI caller. The server uses it to identify the calling system and validate access."
+    "description": "http_query_params: caller_name"
   },
   {
-    "fieldName": "http_query_params: caller_token",
+    "fieldName": "caller_token",
     "type": "string",
-    "description": "Authentication token generated from the caller identity and secret key. The server validates this before executing the request."
+    "description": "http_query_params: caller_token"
   }
 ]
 ```
@@ -832,22 +832,22 @@ Purpose: Check whether a datasource name or physical datasource config already e
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `http_query_params: caller_name` | `string` | Yes | Name of the registered OpenAPI caller. The server uses it to identify the calling system and validate access. |
-| `http_query_params: caller_token` | `string` | Yes | Authentication token generated from the caller identity and secret key. The server validates this before executing the request. |
+| `caller_name` | `string` | Yes | http_query_params: caller_name |
+| `caller_token` | `string` | Yes | http_query_params: caller_token |
 
 Import JSON:
 
 ```json
 [
   {
-    "fieldName": "http_query_params: caller_name",
+    "fieldName": "caller_name",
     "type": "string",
-    "description": "Name of the registered OpenAPI caller. The server uses it to identify the calling system and validate access."
+    "description": "http_query_params: caller_name"
   },
   {
-    "fieldName": "http_query_params: caller_token",
+    "fieldName": "caller_token",
     "type": "string",
-    "description": "Authentication token generated from the caller identity and secret key. The server validates this before executing the request."
+    "description": "http_query_params: caller_token"
   }
 ]
 ```
@@ -1502,8 +1502,8 @@ Purpose: Return old/new generated Darwin platform config for a feature group.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `http_query_params: caller_name` | `string` | Yes | Name of the registered OpenAPI caller. The server uses it to identify the calling system and validate access. |
-| `http_query_params: caller_token` | `string` | Yes | Authentication token generated from the caller identity and secret key. The server validates this before executing the request. |
+| `caller_name` | `string` | Yes | http_query_params: caller_name |
+| `caller_token` | `string` | Yes | http_query_params: caller_token |
 | `group_name` | `string` | No | Darwin feature group name to inspect. Either `group_name` or a positive `group_id` must identify an existing task. |
 | `group_id` | `integer` | No | Darwin feature group database id. Used as an alternative lookup key when `group_name` is not provided. |
 | `op_region` | `string` | No | Region to generate config for. Supports comma-separated regions. If omitted, the task's `group_region` is used. |
@@ -1513,14 +1513,14 @@ Import JSON:
 ```json
 [
   {
-    "fieldName": "http_query_params: caller_name",
+    "fieldName": "caller_name",
     "type": "string",
-    "description": "Name of the registered OpenAPI caller. The server uses it to identify the calling system and validate access."
+    "description": "http_query_params: caller_name"
   },
   {
-    "fieldName": "http_query_params: caller_token",
+    "fieldName": "caller_token",
     "type": "string",
-    "description": "Authentication token generated from the caller identity and secret key. The server validates this before executing the request."
+    "description": "http_query_params: caller_token"
   },
   {
     "fieldName": "group_name",
@@ -1670,22 +1670,22 @@ Purpose: Create a DataCenter datasource schema. Current migration flow uses it f
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `http_query_params: caller_name` | `string` | Yes | Name of the registered OpenAPI caller. The server uses it to identify the calling system and validate access. |
-| `http_query_params: caller_token` | `string` | Yes | Authentication token generated from the caller identity and secret key. The server validates this before executing the request. |
+| `caller_name` | `string` | Yes | http_query_params: caller_name |
+| `caller_token` | `string` | Yes | http_query_params: caller_token |
 
 Import JSON:
 
 ```json
 [
   {
-    "fieldName": "http_query_params: caller_name",
+    "fieldName": "caller_name",
     "type": "string",
-    "description": "Name of the registered OpenAPI caller. The server uses it to identify the calling system and validate access."
+    "description": "http_query_params: caller_name"
   },
   {
-    "fieldName": "http_query_params: caller_token",
+    "fieldName": "caller_token",
     "type": "string",
-    "description": "Authentication token generated from the caller identity and secret key. The server validates this before executing the request."
+    "description": "http_query_params: caller_token"
   }
 ]
 ```
@@ -1925,22 +1925,22 @@ Purpose: Create a DataCenter task metadata object.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `http_query_params: caller_name` | `string` | Yes | Name of the registered OpenAPI caller. The server uses it to identify the calling system and validate access. |
-| `http_query_params: caller_token` | `string` | Yes | Authentication token generated from the caller identity and secret key. The server validates this before executing the request. |
+| `caller_name` | `string` | Yes | http_query_params: caller_name |
+| `caller_token` | `string` | Yes | http_query_params: caller_token |
 
 Import JSON:
 
 ```json
 [
   {
-    "fieldName": "http_query_params: caller_name",
+    "fieldName": "caller_name",
     "type": "string",
-    "description": "Name of the registered OpenAPI caller. The server uses it to identify the calling system and validate access."
+    "description": "http_query_params: caller_name"
   },
   {
-    "fieldName": "http_query_params: caller_token",
+    "fieldName": "caller_token",
     "type": "string",
-    "description": "Authentication token generated from the caller identity and secret key. The server validates this before executing the request."
+    "description": "http_query_params: caller_token"
   }
 ]
 ```
@@ -2345,22 +2345,22 @@ Purpose: Save DSL source code for a DataCenter task.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `http_query_params: caller_name` | `string` | Yes | Name of the registered OpenAPI caller. The server uses it to identify the calling system and validate access. |
-| `http_query_params: caller_token` | `string` | Yes | Authentication token generated from the caller identity and secret key. The server validates this before executing the request. |
+| `caller_name` | `string` | Yes | http_query_params: caller_name |
+| `caller_token` | `string` | Yes | http_query_params: caller_token |
 
 Import JSON:
 
 ```json
 [
   {
-    "fieldName": "http_query_params: caller_name",
+    "fieldName": "caller_name",
     "type": "string",
-    "description": "Name of the registered OpenAPI caller. The server uses it to identify the calling system and validate access."
+    "description": "http_query_params: caller_name"
   },
   {
-    "fieldName": "http_query_params: caller_token",
+    "fieldName": "caller_token",
     "type": "string",
-    "description": "Authentication token generated from the caller identity and secret key. The server validates this before executing the request."
+    "description": "http_query_params: caller_token"
   }
 ]
 ```

@@ -25,7 +25,8 @@ Use `references/example_byterec_api_reference.md` as a complete example of the e
 
 3. Document common parameters under each API.
    - Repeat shared query params and headers inside each endpoint section, because import tools often work per endpoint.
-   - If a field is transported in query, use the import field name required by the target tool, for example `http_query_params: caller_name`.
+   - Keep `fieldName` as the real parameter name, for example `caller_name`.
+   - If the import tool needs a transport hint, put it in `description`, for example `http_query_params: caller_name`.
 
 4. Model request bodies for import, not only for one example.
    - Include all supported body variants discovered from code, such as datasource types, schema modes, and region-specific dynamic keys.
@@ -90,16 +91,16 @@ Purpose: One concise sentence.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `http_query_params: caller_name` | `string` | Yes | OpenAPI caller identity. |
+| `caller_name` | `string` | Yes | http_query_params: caller_name |
 
 Import JSON:
 
 ```json
 [
   {
-    "fieldName": "http_query_params: caller_name",
+    "fieldName": "caller_name",
     "type": "string",
-    "description": "OpenAPI caller identity.",
+    "description": "http_query_params: caller_name",
     "compliance_tag": {}
   }
 ]
