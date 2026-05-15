@@ -36,7 +36,7 @@ Use `references/example_byterec_api_reference.md` as a complete example of the e
    - Allowed `type` values: `string`, `boolean`, `integer`, `object`, `map`, `array`.
    - Convert specific array spellings such as `array<object>` and `array<string>` to `array`.
    - Convert typed maps such as `object<string, object>` to `map`.
-   - Preserve element structure with `children` on arrays when the importer supports it.
+   - Model every array as exactly one child named `items`. If the array item is an object, put the item's fields under `items.children`.
 
 6. Structure Import JSON for importer compatibility.
    - Each field item should use:
@@ -49,6 +49,24 @@ Use `references/example_byterec_api_reference.md` as a complete example of the e
      }
      ```
    - For `object`, include non-empty `children`; do not emit an empty object field if the importer rejects empty objects.
+   - For `array`, include exactly one child:
+     ```json
+     {
+       "fieldName": "items",
+       "type": "object",
+       "description": "Array item.",
+       "compliance_tag": null,
+       "children": [
+         {
+           "fieldName": "name",
+           "type": "string",
+           "description": "Item field.",
+           "compliance_tag": {}
+         }
+       ]
+     }
+     ```
+     Replace `type` with `string`, `integer`, or another scalar type for scalar arrays, and omit `children` for scalar items.
    - For nested fields, prefer nested `children` over flat names like `data.uri` when importing body or response schemas.
    - Use `[]` for empty query/path/header/body groups.
 
@@ -103,5 +121,6 @@ Repeat the same pattern for Path Params, Headers, Body Fields, and Response Fiel
 - Do not invent routes from client wrapper names.
 - Do not leave body variants out just because the sample request uses one region or type.
 - Do not use unsupported import types like `array<object>` or `array<string>`.
+- Do not place multiple children directly under an `array`; wrap them under one `items` child.
 - Do not emit `object` fields without `children` in Import JSON.
 - Do not flatten nested Import JSON fields if the importer expects `children`.

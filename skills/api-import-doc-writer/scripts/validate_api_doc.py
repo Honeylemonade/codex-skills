@@ -43,6 +43,13 @@ def walk_import_fields(value: Any, block_index: int, path: str, issues: list[str
     if field_type == "object" and not value.get("children"):
         issues.append(f"JSON block {block_index}: object field {field_path} must have non-empty children")
 
+    if field_type == "array":
+        children = value.get("children") or []
+        if len(children) != 1:
+            issues.append(f"JSON block {block_index}: array field {field_path} must have exactly one child named items")
+        elif children[0].get("fieldName") != "items":
+            issues.append(f"JSON block {block_index}: array field {field_path} child must be named items")
+
     for child in value.get("children") or []:
         walk_import_fields(child, block_index, field_path, issues)
 

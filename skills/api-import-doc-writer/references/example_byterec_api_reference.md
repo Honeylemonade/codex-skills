@@ -258,16 +258,24 @@ Import JSON:
     "compliance_tag": null,
     "children": [
       {
-        "fieldName": "name",
-        "type": "string",
-        "description": "Field name.",
-        "compliance_tag": {}
-      },
-      {
-        "fieldName": "data_type",
-        "type": "string",
-        "description": "DataCenter/Monarch field type string.",
-        "compliance_tag": {}
+        "fieldName": "items",
+        "type": "object",
+        "description": "Array item for fields.",
+        "compliance_tag": null,
+        "children": [
+          {
+            "fieldName": "name",
+            "type": "string",
+            "description": "Field name.",
+            "compliance_tag": {}
+          },
+          {
+            "fieldName": "data_type",
+            "type": "string",
+            "description": "DataCenter/Monarch field type string.",
+            "compliance_tag": {}
+          }
+        ]
       }
     ]
   },
@@ -278,16 +286,24 @@ Import JSON:
     "compliance_tag": null,
     "children": [
       {
-        "fieldName": "name",
-        "type": "string",
-        "description": "Field name.",
-        "compliance_tag": {}
-      },
-      {
-        "fieldName": "data_type",
-        "type": "string",
-        "description": "DataCenter/Monarch field type string.",
-        "compliance_tag": {}
+        "fieldName": "items",
+        "type": "object",
+        "description": "Array item for custom_fields.",
+        "compliance_tag": null,
+        "children": [
+          {
+            "fieldName": "name",
+            "type": "string",
+            "description": "Field name.",
+            "compliance_tag": {}
+          },
+          {
+            "fieldName": "data_type",
+            "type": "string",
+            "description": "DataCenter/Monarch field type string.",
+            "compliance_tag": {}
+          }
+        ]
       }
     ]
   },
@@ -298,16 +314,24 @@ Import JSON:
     "compliance_tag": null,
     "children": [
       {
-        "fieldName": "name",
-        "type": "string",
-        "description": "RPC request field name.",
-        "compliance_tag": {}
-      },
-      {
-        "fieldName": "data_type",
-        "type": "string",
-        "description": "RPC request field type.",
-        "compliance_tag": {}
+        "fieldName": "items",
+        "type": "object",
+        "description": "Array item for request.",
+        "compliance_tag": null,
+        "children": [
+          {
+            "fieldName": "name",
+            "type": "string",
+            "description": "RPC request field name.",
+            "compliance_tag": {}
+          },
+          {
+            "fieldName": "data_type",
+            "type": "string",
+            "description": "RPC request field type.",
+            "compliance_tag": {}
+          }
+        ]
       }
     ]
   },
@@ -318,16 +342,24 @@ Import JSON:
     "compliance_tag": null,
     "children": [
       {
-        "fieldName": "name",
-        "type": "string",
-        "description": "RPC response field name.",
-        "compliance_tag": {}
-      },
-      {
-        "fieldName": "data_type",
-        "type": "string",
-        "description": "RPC response field type.",
-        "compliance_tag": {}
+        "fieldName": "items",
+        "type": "object",
+        "description": "Array item for response.",
+        "compliance_tag": null,
+        "children": [
+          {
+            "fieldName": "name",
+            "type": "string",
+            "description": "RPC response field name.",
+            "compliance_tag": {}
+          },
+          {
+            "fieldName": "data_type",
+            "type": "string",
+            "description": "RPC response field type.",
+            "compliance_tag": {}
+          }
+        ]
       }
     ]
   },
@@ -510,16 +542,24 @@ Import JSON:
         "compliance_tag": null,
         "children": [
           {
-            "fieldName": "name",
-            "type": "string",
-            "description": "Extra option key.",
-            "compliance_tag": {}
-          },
-          {
-            "fieldName": "value",
-            "type": "string",
-            "description": "Extra option value.",
-            "compliance_tag": {}
+            "fieldName": "items",
+            "type": "object",
+            "description": "Array item for extra_config.",
+            "compliance_tag": null,
+            "children": [
+              {
+                "fieldName": "name",
+                "type": "string",
+                "description": "Extra option key.",
+                "compliance_tag": {}
+              },
+              {
+                "fieldName": "value",
+                "type": "string",
+                "description": "Extra option value.",
+                "compliance_tag": {}
+              }
+            ]
           }
         ]
       }
@@ -704,16 +744,24 @@ Import JSON:
         "compliance_tag": null,
         "children": [
           {
-            "fieldName": "name",
-            "type": "string",
-            "description": "Extra option key.",
-            "compliance_tag": {}
-          },
-          {
-            "fieldName": "value",
-            "type": "string",
-            "description": "Extra option value.",
-            "compliance_tag": {}
+            "fieldName": "items",
+            "type": "object",
+            "description": "Array item for extra_config.",
+            "compliance_tag": null,
+            "children": [
+              {
+                "fieldName": "name",
+                "type": "string",
+                "description": "Extra option key.",
+                "compliance_tag": {}
+              },
+              {
+                "fieldName": "value",
+                "type": "string",
+                "description": "Extra option value.",
+                "compliance_tag": {}
+              }
+            ]
           }
         ]
       }
@@ -1156,16 +1204,24 @@ Import JSON:
         "compliance_tag": null,
         "children": [
           {
-            "fieldName": "name",
-            "type": "string",
-            "description": "Extra option key.",
-            "compliance_tag": {}
-          },
-          {
-            "fieldName": "value",
-            "type": "string",
-            "description": "Extra option value.",
-            "compliance_tag": {}
+            "fieldName": "items",
+            "type": "object",
+            "description": "Array item for extra_config.",
+            "compliance_tag": null,
+            "children": [
+              {
+                "fieldName": "name",
+                "type": "string",
+                "description": "Extra option key.",
+                "compliance_tag": {}
+              },
+              {
+                "fieldName": "value",
+                "type": "string",
+                "description": "Extra option value.",
+                "compliance_tag": {}
+              }
+            ]
           }
         ]
       }
@@ -1350,16 +1406,24 @@ Import JSON:
         "compliance_tag": null,
         "children": [
           {
-            "fieldName": "name",
-            "type": "string",
-            "description": "Extra option key.",
-            "compliance_tag": {}
-          },
-          {
-            "fieldName": "value",
-            "type": "string",
-            "description": "Extra option value.",
-            "compliance_tag": {}
+            "fieldName": "items",
+            "type": "object",
+            "description": "Array item for extra_config.",
+            "compliance_tag": null,
+            "children": [
+              {
+                "fieldName": "name",
+                "type": "string",
+                "description": "Extra option key.",
+                "compliance_tag": {}
+              },
+              {
+                "fieldName": "value",
+                "type": "string",
+                "description": "Extra option value.",
+                "compliance_tag": {}
+              }
+            ]
           }
         ]
       }
@@ -1790,16 +1854,24 @@ Import JSON:
         "compliance_tag": null,
         "children": [
           {
-            "fieldName": "name",
-            "type": "string",
-            "description": "Flattened field name.",
-            "compliance_tag": {}
-          },
-          {
-            "fieldName": "data_type",
-            "type": "string",
-            "description": "DataCenter/Monarch field type string.",
-            "compliance_tag": {}
+            "fieldName": "items",
+            "type": "object",
+            "description": "Array item for custom_fields.",
+            "compliance_tag": null,
+            "children": [
+              {
+                "fieldName": "name",
+                "type": "string",
+                "description": "Flattened field name.",
+                "compliance_tag": {}
+              },
+              {
+                "fieldName": "data_type",
+                "type": "string",
+                "description": "DataCenter/Monarch field type string.",
+                "compliance_tag": {}
+              }
+            ]
           }
         ]
       }
@@ -2007,7 +2079,15 @@ Import JSON:
     "fieldName": "owners",
     "type": "array",
     "description": "Task owner names.",
-    "compliance_tag": {}
+    "compliance_tag": null,
+    "children": [
+      {
+        "fieldName": "items",
+        "type": "string",
+        "description": "Owner name item.",
+        "compliance_tag": {}
+      }
+    ]
   },
   {
     "fieldName": "business_line",
@@ -2037,7 +2117,15 @@ Import JSON:
         "fieldName": "target_entities",
         "type": "array",
         "description": "Target entity list for a user behavior sequence task.",
-        "compliance_tag": {}
+        "compliance_tag": null,
+        "children": [
+          {
+            "fieldName": "items",
+            "type": "string",
+            "description": "Target entity item.",
+            "compliance_tag": {}
+          }
+        ]
       }
     ]
   },
@@ -2152,7 +2240,15 @@ Import JSON:
         "fieldName": "owners",
         "type": "array",
         "description": "Owners stored on the task metadata.",
-        "compliance_tag": {}
+        "compliance_tag": null,
+        "children": [
+          {
+            "fieldName": "items",
+            "type": "string",
+            "description": "Owner name item.",
+            "compliance_tag": {}
+          }
+        ]
       },
       {
         "fieldName": "uri",
@@ -2194,7 +2290,15 @@ Import JSON:
             "fieldName": "serving_modes",
             "type": "array",
             "description": "Serving/profile modes derived from request profile_type.",
-            "compliance_tag": {}
+            "compliance_tag": null,
+            "children": [
+              {
+                "fieldName": "items",
+                "type": "string",
+                "description": "Serving/profile mode item.",
+                "compliance_tag": {}
+              }
+            ]
           },
           {
             "fieldName": "business_line",
