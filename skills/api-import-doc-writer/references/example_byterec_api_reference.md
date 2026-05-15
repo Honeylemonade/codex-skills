@@ -17,8 +17,8 @@ Purpose: Create a DataCenter datasource after duplicate-check has confirmed that
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `caller_name` | `string` | Yes | http_query_params: caller_name |
-| `caller_token` | `string` | Yes | http_query_params: caller_token |
+| `caller_name` | `string` | Yes | http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data. |
+| `caller_token` | `string` | Yes | http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data. |
 
 Import JSON:
 
@@ -27,12 +27,12 @@ Import JSON:
   {
     "fieldName": "caller_name",
     "type": "string",
-    "description": "http_query_params: caller_name"
+    "description": "http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data."
   },
   {
     "fieldName": "caller_token",
     "type": "string",
-    "description": "http_query_params: caller_token"
+    "description": "http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data."
   }
 ]
 ```
@@ -118,7 +118,7 @@ Note: `eu` and `ttp` are top-level request body keys. They are not nested under 
 | `description` | `string` | No | Human-readable datasource description stored on datasource metadata. |
 | `region` | `string` | No | Target or display region used by datasource creation. Region-specific physical configs are still supplied as top-level region keys. |
 | `type` | `string` | Yes | Datasource type. Supported backend values include `hive`, `kafka`, `rocketmq`, `rpc`, `abase`, `index_service`, `redis`, and `paimon`. |
-| `staff_name` | `string` | OpenAPI | Owner/creator staff name. The OpenAPI create handler comments indicate this is required for OpenAPI callers. |
+| `staff_name` | `string` | OpenAPI | Request body staff_name. Employee or corporate account name of the operator/creator for the datasource; contains BDEE/corporate identity data and should be tagged as Corporation Data when importing. |
 | `data_type` | `string` | Kafka/RocketMQ | Message payload format for Kafka or RocketMQ. Supported values are `json` and `pb`. |
 | `schema_name` | `string` | Kafka/RocketMQ PB | Existing DataCenter schema name to bind to a PB Kafka or RocketMQ datasource. |
 | `schema_product` | `string` | No | Product that owns `schema_name`; defaults to request `product` if omitted. |
@@ -145,15 +145,15 @@ Note: `eu` and `ttp` are top-level request body keys. They are not nested under 
 | `eu.rocketmq_config.cluster` | `string` | For `rocketmq` in `eu` | RocketMQ cluster name. |
 | `eu.rocketmq_config.topic` | `string` | For `rocketmq` in `eu` | RocketMQ topic name. |
 | `eu.rpc_config` | `object` | For `rpc` in `eu` | RPC physical config. |
-| `eu.rpc_config.psm` | `string` | For `rpc` in `eu` | RPC PSM or consul identity. |
+| `eu.rpc_config.psm` | `string` | For `rpc` in `eu` | Request body psm. RPC service PSM/consul identifier used to locate the backend service for the datasource; service metadata, not user content. |
 | `eu.rpc_config.service_class` | `string` | For `rpc` in `eu` | Thrift service class. |
 | `eu.rpc_config.method` | `string` | For `rpc` in `eu` | Thrift method name. |
 | `eu.rpc_config.cluster` | `string` | No | Optional RPC cluster. |
 | `eu.abase_config` | `object` | For `abase` in `eu` | Abase physical config. |
-| `eu.abase_config.psm` | `string` | For `abase` in `eu` | Abase PSM. |
+| `eu.abase_config.psm` | `string` | For `abase` in `eu` | Request body psm. Abase service PSM used to locate the backend storage service for the datasource; service metadata, not user content. |
 | `eu.abase_config.table` | `string` | For `abase` in `eu` | Abase table name. |
 | `eu.index_service_config` | `object` | For `index_service` in `eu` | IndexService physical config. |
-| `eu.index_service_config.psm` | `string` | For `index_service` in `eu` | IndexService PSM. |
+| `eu.index_service_config.psm` | `string` | For `index_service` in `eu` | Request body psm. IndexService PSM used to locate the backend index service for the datasource; service metadata, not user content. |
 | `eu.index_service_config.index_name` | `string` | For `index_service` in `eu` | IndexService index name. |
 | `eu.redis_config` | `object` | For `redis` in `eu` | Redis physical config. |
 | `eu.redis_config.cluster` | `string` | For `redis` in `eu` | Redis cluster name. |
@@ -174,15 +174,15 @@ Note: `eu` and `ttp` are top-level request body keys. They are not nested under 
 | `ttp.rocketmq_config.cluster` | `string` | For `rocketmq` in `ttp` | RocketMQ cluster name. |
 | `ttp.rocketmq_config.topic` | `string` | For `rocketmq` in `ttp` | RocketMQ topic name. |
 | `ttp.rpc_config` | `object` | For `rpc` in `ttp` | RPC physical config. |
-| `ttp.rpc_config.psm` | `string` | For `rpc` in `ttp` | RPC PSM or consul identity. |
+| `ttp.rpc_config.psm` | `string` | For `rpc` in `ttp` | Request body psm. RPC service PSM/consul identifier used to locate the backend service for the datasource; service metadata, not user content. |
 | `ttp.rpc_config.service_class` | `string` | For `rpc` in `ttp` | Thrift service class. |
 | `ttp.rpc_config.method` | `string` | For `rpc` in `ttp` | Thrift method name. |
 | `ttp.rpc_config.cluster` | `string` | No | Optional RPC cluster. |
 | `ttp.abase_config` | `object` | For `abase` in `ttp` | Abase physical config. |
-| `ttp.abase_config.psm` | `string` | For `abase` in `ttp` | Abase PSM. |
+| `ttp.abase_config.psm` | `string` | For `abase` in `ttp` | Request body psm. Abase service PSM used to locate the backend storage service for the datasource; service metadata, not user content. |
 | `ttp.abase_config.table` | `string` | For `abase` in `ttp` | Abase table name. |
 | `ttp.index_service_config` | `object` | For `index_service` in `ttp` | IndexService physical config. |
-| `ttp.index_service_config.psm` | `string` | For `index_service` in `ttp` | IndexService PSM. |
+| `ttp.index_service_config.psm` | `string` | For `index_service` in `ttp` | Request body psm. IndexService PSM used to locate the backend index service for the datasource; service metadata, not user content. |
 | `ttp.index_service_config.index_name` | `string` | For `index_service` in `ttp` | IndexService index name. |
 | `ttp.redis_config` | `object` | For `redis` in `ttp` | Redis physical config. |
 | `ttp.redis_config.cluster` | `string` | For `redis` in `ttp` | Redis cluster name. |
@@ -230,7 +230,7 @@ Import JSON:
   {
     "fieldName": "staff_name",
     "type": "string",
-    "description": "Owner/creator staff name for OpenAPI creation requests.",
+    "description": "Request body staff_name. Employee or corporate account name of the operator/creator for the datasource; contains BDEE/corporate identity data and should be tagged as Corporation Data when importing.",
     "compliance_tag": {}
   },
   {
@@ -438,7 +438,7 @@ Import JSON:
           {
             "fieldName": "psm",
             "type": "string",
-            "description": "RPC PSM or consul identity.",
+            "description": "Request body psm. RPC service PSM/consul identifier used to locate the backend service for the datasource; service metadata, not user content.",
             "compliance_tag": {}
           },
           {
@@ -470,7 +470,7 @@ Import JSON:
           {
             "fieldName": "psm",
             "type": "string",
-            "description": "Abase PSM.",
+            "description": "Request body psm. Abase service PSM used to locate the backend storage service for the datasource; service metadata, not user content.",
             "compliance_tag": {}
           },
           {
@@ -490,7 +490,7 @@ Import JSON:
           {
             "fieldName": "psm",
             "type": "string",
-            "description": "IndexService PSM.",
+            "description": "Request body psm. IndexService PSM used to locate the backend index service for the datasource; service metadata, not user content.",
             "compliance_tag": {}
           },
           {
@@ -640,7 +640,7 @@ Import JSON:
           {
             "fieldName": "psm",
             "type": "string",
-            "description": "RPC PSM or consul identity.",
+            "description": "Request body psm. RPC service PSM/consul identifier used to locate the backend service for the datasource; service metadata, not user content.",
             "compliance_tag": {}
           },
           {
@@ -672,7 +672,7 @@ Import JSON:
           {
             "fieldName": "psm",
             "type": "string",
-            "description": "Abase PSM.",
+            "description": "Request body psm. Abase service PSM used to locate the backend storage service for the datasource; service metadata, not user content.",
             "compliance_tag": {}
           },
           {
@@ -692,7 +692,7 @@ Import JSON:
           {
             "fieldName": "psm",
             "type": "string",
-            "description": "IndexService PSM.",
+            "description": "Request body psm. IndexService PSM used to locate the backend index service for the datasource; service metadata, not user content.",
             "compliance_tag": {}
           },
           {
@@ -832,8 +832,8 @@ Purpose: Check whether a datasource name or physical datasource config already e
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `caller_name` | `string` | Yes | http_query_params: caller_name |
-| `caller_token` | `string` | Yes | http_query_params: caller_token |
+| `caller_name` | `string` | Yes | http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data. |
+| `caller_token` | `string` | Yes | http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data. |
 
 Import JSON:
 
@@ -842,12 +842,12 @@ Import JSON:
   {
     "fieldName": "caller_name",
     "type": "string",
-    "description": "http_query_params: caller_name"
+    "description": "http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data."
   },
   {
     "fieldName": "caller_token",
     "type": "string",
-    "description": "http_query_params: caller_token"
+    "description": "http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data."
   }
 ]
 ```
@@ -937,15 +937,15 @@ Note: `eu` and `ttp` are top-level request body keys. They are not nested under 
 | `eu.rocketmq_config.cluster` | `string` | For `rocketmq` in `eu` | RocketMQ cluster name. |
 | `eu.rocketmq_config.topic` | `string` | For `rocketmq` in `eu` | RocketMQ topic name. |
 | `eu.rpc_config` | `object` | For `rpc` in `eu` | RPC physical config. |
-| `eu.rpc_config.psm` | `string` | For `rpc` in `eu` | RPC PSM or consul identity. |
+| `eu.rpc_config.psm` | `string` | For `rpc` in `eu` | Request body psm. RPC service PSM/consul identifier used to locate the backend service for the datasource; service metadata, not user content. |
 | `eu.rpc_config.service_class` | `string` | For `rpc` in `eu` | Thrift service class. |
 | `eu.rpc_config.method` | `string` | For `rpc` in `eu` | Thrift method name. |
 | `eu.rpc_config.cluster` | `string` | No | Optional RPC cluster. |
 | `eu.abase_config` | `object` | For `abase` in `eu` | Abase physical config. |
-| `eu.abase_config.psm` | `string` | For `abase` in `eu` | Abase PSM. |
+| `eu.abase_config.psm` | `string` | For `abase` in `eu` | Request body psm. Abase service PSM used to locate the backend storage service for the datasource; service metadata, not user content. |
 | `eu.abase_config.table` | `string` | For `abase` in `eu` | Abase table name. |
 | `eu.index_service_config` | `object` | For `index_service` in `eu` | IndexService physical config. |
-| `eu.index_service_config.psm` | `string` | For `index_service` in `eu` | IndexService PSM. |
+| `eu.index_service_config.psm` | `string` | For `index_service` in `eu` | Request body psm. IndexService PSM used to locate the backend index service for the datasource; service metadata, not user content. |
 | `eu.index_service_config.index_name` | `string` | For `index_service` in `eu` | IndexService index name. |
 | `eu.redis_config` | `object` | For `redis` in `eu` | Redis physical config. |
 | `eu.redis_config.cluster` | `string` | For `redis` in `eu` | Redis cluster name. |
@@ -966,15 +966,15 @@ Note: `eu` and `ttp` are top-level request body keys. They are not nested under 
 | `ttp.rocketmq_config.cluster` | `string` | For `rocketmq` in `ttp` | RocketMQ cluster name. |
 | `ttp.rocketmq_config.topic` | `string` | For `rocketmq` in `ttp` | RocketMQ topic name. |
 | `ttp.rpc_config` | `object` | For `rpc` in `ttp` | RPC physical config. |
-| `ttp.rpc_config.psm` | `string` | For `rpc` in `ttp` | RPC PSM or consul identity. |
+| `ttp.rpc_config.psm` | `string` | For `rpc` in `ttp` | Request body psm. RPC service PSM/consul identifier used to locate the backend service for the datasource; service metadata, not user content. |
 | `ttp.rpc_config.service_class` | `string` | For `rpc` in `ttp` | Thrift service class. |
 | `ttp.rpc_config.method` | `string` | For `rpc` in `ttp` | Thrift method name. |
 | `ttp.rpc_config.cluster` | `string` | No | Optional RPC cluster. |
 | `ttp.abase_config` | `object` | For `abase` in `ttp` | Abase physical config. |
-| `ttp.abase_config.psm` | `string` | For `abase` in `ttp` | Abase PSM. |
+| `ttp.abase_config.psm` | `string` | For `abase` in `ttp` | Request body psm. Abase service PSM used to locate the backend storage service for the datasource; service metadata, not user content. |
 | `ttp.abase_config.table` | `string` | For `abase` in `ttp` | Abase table name. |
 | `ttp.index_service_config` | `object` | For `index_service` in `ttp` | IndexService physical config. |
-| `ttp.index_service_config.psm` | `string` | For `index_service` in `ttp` | IndexService PSM. |
+| `ttp.index_service_config.psm` | `string` | For `index_service` in `ttp` | Request body psm. IndexService PSM used to locate the backend index service for the datasource; service metadata, not user content. |
 | `ttp.index_service_config.index_name` | `string` | For `index_service` in `ttp` | IndexService index name. |
 | `ttp.redis_config` | `object` | For `redis` in `ttp` | Redis physical config. |
 | `ttp.redis_config.cluster` | `string` | For `redis` in `ttp` | Redis cluster name. |
@@ -1100,7 +1100,7 @@ Import JSON:
           {
             "fieldName": "psm",
             "type": "string",
-            "description": "RPC PSM or consul identity.",
+            "description": "Request body psm. RPC service PSM/consul identifier used to locate the backend service for the datasource; service metadata, not user content.",
             "compliance_tag": {}
           },
           {
@@ -1132,7 +1132,7 @@ Import JSON:
           {
             "fieldName": "psm",
             "type": "string",
-            "description": "Abase PSM.",
+            "description": "Request body psm. Abase service PSM used to locate the backend storage service for the datasource; service metadata, not user content.",
             "compliance_tag": {}
           },
           {
@@ -1152,7 +1152,7 @@ Import JSON:
           {
             "fieldName": "psm",
             "type": "string",
-            "description": "IndexService PSM.",
+            "description": "Request body psm. IndexService PSM used to locate the backend index service for the datasource; service metadata, not user content.",
             "compliance_tag": {}
           },
           {
@@ -1302,7 +1302,7 @@ Import JSON:
           {
             "fieldName": "psm",
             "type": "string",
-            "description": "RPC PSM or consul identity.",
+            "description": "Request body psm. RPC service PSM/consul identifier used to locate the backend service for the datasource; service metadata, not user content.",
             "compliance_tag": {}
           },
           {
@@ -1334,7 +1334,7 @@ Import JSON:
           {
             "fieldName": "psm",
             "type": "string",
-            "description": "Abase PSM.",
+            "description": "Request body psm. Abase service PSM used to locate the backend storage service for the datasource; service metadata, not user content.",
             "compliance_tag": {}
           },
           {
@@ -1354,7 +1354,7 @@ Import JSON:
           {
             "fieldName": "psm",
             "type": "string",
-            "description": "IndexService PSM.",
+            "description": "Request body psm. IndexService PSM used to locate the backend index service for the datasource; service metadata, not user content.",
             "compliance_tag": {}
           },
           {
@@ -1502,8 +1502,8 @@ Purpose: Return old/new generated Darwin platform config for a feature group.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `caller_name` | `string` | Yes | http_query_params: caller_name |
-| `caller_token` | `string` | Yes | http_query_params: caller_token |
+| `caller_name` | `string` | Yes | http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data. |
+| `caller_token` | `string` | Yes | http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data. |
 | `group_name` | `string` | No | Darwin feature group name to inspect. Either `group_name` or a positive `group_id` must identify an existing task. |
 | `group_id` | `integer` | No | Darwin feature group database id. Used as an alternative lookup key when `group_name` is not provided. |
 | `op_region` | `string` | No | Region to generate config for. Supports comma-separated regions. If omitted, the task's `group_region` is used. |
@@ -1515,12 +1515,12 @@ Import JSON:
   {
     "fieldName": "caller_name",
     "type": "string",
-    "description": "http_query_params: caller_name"
+    "description": "http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data."
   },
   {
     "fieldName": "caller_token",
     "type": "string",
-    "description": "http_query_params: caller_token"
+    "description": "http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data."
   },
   {
     "fieldName": "group_name",
@@ -1670,8 +1670,8 @@ Purpose: Create a DataCenter datasource schema. Current migration flow uses it f
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `caller_name` | `string` | Yes | http_query_params: caller_name |
-| `caller_token` | `string` | Yes | http_query_params: caller_token |
+| `caller_name` | `string` | Yes | http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data. |
+| `caller_token` | `string` | Yes | http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data. |
 
 Import JSON:
 
@@ -1680,12 +1680,12 @@ Import JSON:
   {
     "fieldName": "caller_name",
     "type": "string",
-    "description": "http_query_params: caller_name"
+    "description": "http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data."
   },
   {
     "fieldName": "caller_token",
     "type": "string",
-    "description": "http_query_params: caller_token"
+    "description": "http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data."
   }
 ]
 ```
@@ -1925,8 +1925,8 @@ Purpose: Create a DataCenter task metadata object.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `caller_name` | `string` | Yes | http_query_params: caller_name |
-| `caller_token` | `string` | Yes | http_query_params: caller_token |
+| `caller_name` | `string` | Yes | http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data. |
+| `caller_token` | `string` | Yes | http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data. |
 
 Import JSON:
 
@@ -1935,12 +1935,12 @@ Import JSON:
   {
     "fieldName": "caller_name",
     "type": "string",
-    "description": "http_query_params: caller_name"
+    "description": "http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data."
   },
   {
     "fieldName": "caller_token",
     "type": "string",
-    "description": "http_query_params: caller_token"
+    "description": "http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data."
   }
 ]
 ```
@@ -2345,8 +2345,8 @@ Purpose: Save DSL source code for a DataCenter task.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `caller_name` | `string` | Yes | http_query_params: caller_name |
-| `caller_token` | `string` | Yes | http_query_params: caller_token |
+| `caller_name` | `string` | Yes | http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data. |
+| `caller_token` | `string` | Yes | http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data. |
 
 Import JSON:
 
@@ -2355,12 +2355,12 @@ Import JSON:
   {
     "fieldName": "caller_name",
     "type": "string",
-    "description": "http_query_params: caller_name"
+    "description": "http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data."
   },
   {
     "fieldName": "caller_token",
     "type": "string",
-    "description": "http_query_params: caller_token"
+    "description": "http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data."
   }
 ]
 ```
