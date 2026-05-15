@@ -27,6 +27,7 @@ Each skill is a self-contained directory. `SKILL.md` is required; bundled resour
 
 ## Skills
 
+- `api-import-doc-writer`: Generate import-ready API reference docs from source handlers and route code.
 - `netease-lyrics-vocab`: Build vocabulary study tables from NetEase Cloud Music playlist lyrics.
 - `example-skill`: Minimal starter template for future skills.
 
