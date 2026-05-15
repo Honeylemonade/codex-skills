@@ -26,7 +26,7 @@ Use `references/example_byterec_api_reference.md` as a complete example of the e
 3. Document common parameters under each API.
    - Repeat shared query params and headers inside each endpoint section, because import tools often work per endpoint.
    - Keep `fieldName` as the real parameter name, for example `caller_name`.
-   - If the import tool needs a transport hint, put it at the start of `description`, for example `http_query_params: caller_name`, then add enough meaning for data tagging review.
+   - If the import tool needs a transport hint, put the compliance description first when applicable, then the transport hint, for example `Corporation data. http_query_params: caller_name`, then add enough meaning for data tagging review.
 
 4. Model request bodies for import, not only for one example.
    - Include all supported body variants discovered from code, such as datasource types, schema modes, and region-specific dynamic keys.
@@ -112,7 +112,7 @@ Repeat the same pattern for Path Params, Headers, Body Fields, and Response Fiel
 ## Field Description Rules
 
 - Describe what the backend uses the field for, not just its English name.
-- For query params, include the transport hint and usage, for example `http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access.`
+- For query params that identify callers, credentials, systems, services, employees, or corporate accounts, start with `Corporation data.`, then include the transport hint and usage, for example `Corporation data. http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access.`
 - For service identifiers such as `psm`, state that it is a backend service PSM/service metadata used to locate a service.
 - For employee/corporate identity fields such as `staff_name`, state that it is an employee or corporate account name and should be treated as Corporation Data when relevant.
 - Mark requirement with practical values such as `Yes`, `No`, `For kafka`, `Sequence only`, or `Conditional`.

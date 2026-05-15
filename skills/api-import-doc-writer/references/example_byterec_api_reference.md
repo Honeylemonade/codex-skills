@@ -17,8 +17,8 @@ Purpose: Create a DataCenter datasource after duplicate-check has confirmed that
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `caller_name` | `string` | Yes | http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data. |
-| `caller_token` | `string` | Yes | http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data. |
+| `caller_name` | `string` | Yes | Corporation data. http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data. |
+| `caller_token` | `string` | Yes | Corporation data. http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data. |
 
 Import JSON:
 
@@ -27,12 +27,12 @@ Import JSON:
   {
     "fieldName": "caller_name",
     "type": "string",
-    "description": "http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data."
+    "description": "Corporation data. http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data."
   },
   {
     "fieldName": "caller_token",
     "type": "string",
-    "description": "http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data."
+    "description": "Corporation data. http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data."
   }
 ]
 ```
@@ -832,8 +832,8 @@ Purpose: Check whether a datasource name or physical datasource config already e
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `caller_name` | `string` | Yes | http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data. |
-| `caller_token` | `string` | Yes | http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data. |
+| `caller_name` | `string` | Yes | Corporation data. http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data. |
+| `caller_token` | `string` | Yes | Corporation data. http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data. |
 
 Import JSON:
 
@@ -842,12 +842,12 @@ Import JSON:
   {
     "fieldName": "caller_name",
     "type": "string",
-    "description": "http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data."
+    "description": "Corporation data. http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data."
   },
   {
     "fieldName": "caller_token",
     "type": "string",
-    "description": "http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data."
+    "description": "Corporation data. http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data."
   }
 ]
 ```
@@ -1502,8 +1502,8 @@ Purpose: Return old/new generated Darwin platform config for a feature group.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `caller_name` | `string` | Yes | http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data. |
-| `caller_token` | `string` | Yes | http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data. |
+| `caller_name` | `string` | Yes | Corporation data. http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data. |
+| `caller_token` | `string` | Yes | Corporation data. http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data. |
 | `group_name` | `string` | No | Darwin feature group name to inspect. Either `group_name` or a positive `group_id` must identify an existing task. |
 | `group_id` | `integer` | No | Darwin feature group database id. Used as an alternative lookup key when `group_name` is not provided. |
 | `op_region` | `string` | No | Region to generate config for. Supports comma-separated regions. If omitted, the task's `group_region` is used. |
@@ -1515,12 +1515,12 @@ Import JSON:
   {
     "fieldName": "caller_name",
     "type": "string",
-    "description": "http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data."
+    "description": "Corporation data. http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data."
   },
   {
     "fieldName": "caller_token",
     "type": "string",
-    "description": "http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data."
+    "description": "Corporation data. http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data."
   },
   {
     "fieldName": "group_name",
@@ -1670,8 +1670,8 @@ Purpose: Create a DataCenter datasource schema. Current migration flow uses it f
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `caller_name` | `string` | Yes | http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data. |
-| `caller_token` | `string` | Yes | http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data. |
+| `caller_name` | `string` | Yes | Corporation data. http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data. |
+| `caller_token` | `string` | Yes | Corporation data. http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data. |
 
 Import JSON:
 
@@ -1680,12 +1680,12 @@ Import JSON:
   {
     "fieldName": "caller_name",
     "type": "string",
-    "description": "http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data."
+    "description": "Corporation data. http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data."
   },
   {
     "fieldName": "caller_token",
     "type": "string",
-    "description": "http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data."
+    "description": "Corporation data. http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data."
   }
 ]
 ```
@@ -1925,8 +1925,8 @@ Purpose: Create a DataCenter task metadata object.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `caller_name` | `string` | Yes | http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data. |
-| `caller_token` | `string` | Yes | http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data. |
+| `caller_name` | `string` | Yes | Corporation data. http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data. |
+| `caller_token` | `string` | Yes | Corporation data. http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data. |
 
 Import JSON:
 
@@ -1935,12 +1935,12 @@ Import JSON:
   {
     "fieldName": "caller_name",
     "type": "string",
-    "description": "http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data."
+    "description": "Corporation data. http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data."
   },
   {
     "fieldName": "caller_token",
     "type": "string",
-    "description": "http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data."
+    "description": "Corporation data. http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data."
   }
 ]
 ```
@@ -2345,8 +2345,8 @@ Purpose: Save DSL source code for a DataCenter task.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `caller_name` | `string` | Yes | http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data. |
-| `caller_token` | `string` | Yes | http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data. |
+| `caller_name` | `string` | Yes | Corporation data. http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data. |
+| `caller_token` | `string` | Yes | Corporation data. http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data. |
 
 Import JSON:
 
@@ -2355,12 +2355,12 @@ Import JSON:
   {
     "fieldName": "caller_name",
     "type": "string",
-    "description": "http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data."
+    "description": "Corporation data. http_query_params: caller_name. OpenAPI caller identity used by the gateway to identify the calling system and validate access; this is a system/application identifier, not end-user behavior data."
   },
   {
     "fieldName": "caller_token",
     "type": "string",
-    "description": "http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data."
+    "description": "Corporation data. http_query_params: caller_token. OpenAPI authentication token generated from caller credentials and used only for request authentication; treat as credential/security data, not business payload data."
   }
 ]
 ```
